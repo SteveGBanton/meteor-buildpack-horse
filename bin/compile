@@ -199,6 +199,10 @@ echo "-----> Moving built slug to $COMPILE_DIR/app"
 mv $BUNDLE_DEST/bundle "$COMPILE_DIR/app"
 rmdir $BUNDLE_DEST
 
+# Add appoptics-apm to first line of main.js. Make sure that it exists in package.json.
+echo "-----> Adding require('appoptics-apm'); to the first line of $COMPILE_DIR/app/main.js"
+sed -i '1i require("appoptics-apm");' $COMPILE_DIR/app/main.js
+
 # Run npm install on the built slug; only for '--production' dependencies.
 echo "-----> Installing npm production dependencies on built slug"
 if [ -e "$COMPILE_DIR"/app/programs/server/package.json ]; then
